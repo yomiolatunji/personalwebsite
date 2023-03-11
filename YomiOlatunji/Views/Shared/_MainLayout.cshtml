@@ -1,0 +1,102 @@
+﻿@{
+    var location = new Uri($"{ViewContext.HttpContext.Request.Scheme}://{ViewContext.HttpContext.Request.Host}{ViewContext.HttpContext.Request.Path}{ViewContext.HttpContext.Request.QueryString}");  
+    var url = location.AbsoluteUri;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/img/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/img/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/img/icon/favicon-16x16.png">
+    <link rel="manifest" href="~/img/icon/site.webmanifest">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="@ViewBag.Description">
+    <title>@ViewBag.Title - Yomi Olatunji</title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/prism/css/prism.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/paper-kit.css?v=2.3.1" />
+    <link rel="stylesheet" href="~/YomiOlatunji.styles.css" asp-append-version="true" />
+    <!-- Facebook meta data-->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <meta property="og:image" content="@ViewBag.HeaderImage" />
+    <meta property="og:url" content="@url" />
+    <meta property="og:site_name" content="Yomi Olatunji" />
+    <meta name="twitter:title" content="@ViewBag.Title" />
+    <meta name="twitter:image" content="@ViewBag.HeaderImage" />
+    <meta name="twitter:url" content="@url" />
+    <meta name="twitter:card" content="" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5XTWQGL38P"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-5XTWQGL38P');
+    </script>
+</head>
+<body class="sidebar-collapse">
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0&appId=461351465079834&autoLogAppEvents=1" nonce="0WgulR5n"></script>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg nav-down navbar-absolute main-navbar">
+        <div class="container">
+            <div class="navbar-translate">
+                <a class="navbar-brand" href="/" rel="tooltip" title="Yomi Olatunji" data-placement="bottom">
+                    Yọmí
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" data-color="green">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Blogs">
+                            Thoughts
+                        </a>
+                    </li>
+                    @*<li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-page="/Projects">
+                    Projects
+                    </a>
+                    </li>*@
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">
+                            About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @RenderBody()
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/popper/popper.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/prism/js/prism.js"></script>
+
+    <script src="~/js/paper-kit.js?v=2.3.1" type="text/javascript"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

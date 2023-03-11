@@ -1,0 +1,176 @@
+﻿@model YomiOlatunji.Core.ViewModel.BlogResponse
+@using System.Web
+@{
+    ViewData["Title"] = Model.Title;
+    ViewData["Description"] = Model.Excerpt;
+    ViewData["HeaderImage"] = Model.HeaderImage ?? Model.Category.HeaderImage;
+    var location = new Uri($"{ViewContext.HttpContext.Request.Scheme}://{ViewContext.HttpContext.Request.Host}{ViewContext.HttpContext.Request.Path}{ViewContext.HttpContext.Request.QueryString}");
+    var url = location.AbsoluteUri;
+    var facebookAppId = "461351465079834";
+}
+
+
+<div class="page-header" data-parallax="true" style="background-image: url('@(Model.HeaderImage ?? Model.Category.HeaderImage)')">
+    <div class="filter"></div>
+    <div class="content-center">
+        <div class="motto">
+            <h2 class="title-uppercase text-center">@Model.Title</h2>
+            @*<h3 class="text-center">Make your mark with a new design.</h3>*@
+            <br />
+            <a href="javascript:;" class="btn btn-warning btn-round btn-lg">
+                <i class="fa fa-share-alt" aria-hidden="true"></i> Share Article
+            </a>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <div class="main">
+        <div class="section section-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 ml-auto mr-auto">
+                        <div class="text-center">
+                            @*<span class="badge badge-warning main-tag">Trending</span>*@
+                            <a href="javascrip: void(0);">
+                                <h3 class="title">@Model.Category.Name</h3>
+                            </a>
+                            <h6 class="title-uppercase">@Model.PublishDate.GetValueOrDefault().ToString("MMMM dd, yyyy")</h6>
+                            <p class="image-thumb text-center">by @Model.CreateBy</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8 ml-auto mr-auto">
+
+                        <div class="article-content">
+                            @Html.Raw(Model.Content)
+                        </div>
+                        <br />
+                        <div class="article-footer">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5>Tags:</h5>
+                                        @foreach (var item in Model.Tags)
+                                        {
+                                            <span class="label label-default">@item.Tag.Name</span>
+                                        }
+                                    </div>
+                                    <div class="col-md-4 ml-auto">
+                                        <div class="sharing">
+                                            <h5>Share</h5>
+                                            @{
+                                                var twitterUrl = $"https://twitter.com/intent/tweet?text={HttpUtility.UrlEncode(Model.Title)}&url={url}&counturl={url}&related=yomiolatunji_&via=yomiolatunji_";
+                                                var facebookUrl = $"https://www.facebook.com/sharer/sharer.php?u={HttpUtility.UrlEncode($"{url}&src=sdkpreparse")}";
+                                                var facebookUrl2 = $"https://www.facebook.com/dialog/feed?app_id={facebookAppId}&display=popup&name={HttpUtility.UrlEncode(Model.Title)}&link={url}&picture={Model.HeaderImage ?? Model.Category.HeaderImage}&description={Model.Excerpt}";
+                                                var linkedinUrl = $"https://www.linkedin.com/sharing/share-offsite/?url={url}";
+                                            }
+                                            <a href="@twitterUrl" target="_blank" class="btn btn-just-icon btn-twitter" rel="noopener noreferrer">
+                                                <i class="fa fa-twitter"></i>
+                                            </a>
+                                            <a href="@facebookUrl2" target="_blank" class="btn btn-just-icon btn-facebook" rel="noopener noreferrer">
+                                                <i class="fa fa-facebook"></i>
+                                            </a>
+                                            <a href="@linkedinUrl" target="_blank" class="btn btn-just-icon btn-linkedin" rel="noopener noreferrer">
+                                                <i class="fa fa-linkedin"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="container">
+                            <div class="row">
+                                <div class="comments media-area">
+                                    <h3 class="text-center">Comments</h3>
+                                    <div class="media">
+                                        <p>Your email address will not be published. All fields are required</p>
+
+                                        <form method="post" action="@Url.Action("SaveComment","Home")">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <input type="hidden" name="postId" value="@Model.Id">
+                                            <input type="hidden" name="slug" value="@Model.Slug">
+                                            <div class="form-group">
+                                                <h6>Comment<span class="icon-danger">*</span></h6>
+                                                <textarea class="form-control textarea-limited" name="Message" placeholder="Comment" rows="13" maxlength="150"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <h6>Name <span class="icon-danger">*</span></h6>
+                                                <input type="text" class="form-control border-input" name="Name" placeholder="Name">
+                                            </div><div class="form-group">
+                                                <h6>Email <span class="icon-danger">*</span></h6>
+                                                <input type="email" class="form-control border-input" name="Email" placeholder="Email address">
+                                            </div>
+
+                                            <div class="row buttons-row">
+                                                <div class="">
+                                                    <button class="btn btn-secondary btn-round" type="submit">Post Comment</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    @if (Model.Comments?.Any() ?? false)
+                                        @foreach (var comment in Model.Comments)
+                                        {
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h5 class="media-heading">@comment.AuthorName</h5>
+                                                    <div class="pull-right">
+                                                        <h6 class="text-muted">@comment.CreateTime.ToString("MMM dd yyyy, hh:mm tt")</h6>
+                                                        @*<a href="#paper-kit" class="btn btn-info btn-link pull-right "> <i class="fa fa-reply"></i> Reply</a>*@
+                                                    </div>
+                                                    <p>@comment.Message</p>
+
+                                                </div>
+                                            </div>
+                                        }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="related-articles">
+                            <h3 class="title">Related articles</h3>
+                            @*<legend></legend>*@
+                            <div class="container">
+                                <div class="row">
+                                    @foreach (var item in Model.RelatedBlogs)
+                                    {
+                                        <div class="col-md-4">
+                                            <a asp-action="Blog" asp-route-slug="@item.Slug">
+                                                <img src="@item.HeaderImage" alt="Rounded Image" class="img-rounded img-responsive">
+                                            </a>
+                                            <p class="blog-title">@item.Title</p>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer  footer-gray footer-white ">
+    <div class="container">
+        <div class="row">
+            <nav class="footer-nav">
+                <ul>
+                    <li><a asp-action="Privacy" target="_blank">Privicy Policy</a></li>
+                </ul>
+            </nav>
+            <div class="credits ml-auto">
+                <span class="copyright">
+                    © <script>
+                          document.write(new Date().getFullYear())
+                    </script>, created by Yomi Olatunji
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+@section Scripts{
+
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    }

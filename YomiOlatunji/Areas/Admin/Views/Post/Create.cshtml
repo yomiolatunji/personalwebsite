@@ -1,0 +1,135 @@
+﻿@model YomiOlatunji.Core.ViewModel.CreatePost
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main">
+    <div class="section">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-10 mr-auto ml-auto">
+                    <h4>Post</h4>
+                    <hr />
+                    @*<partial name="_StatusMessage" for="StatusMessage" />*@
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="CategoryId" class="control-label"></label>
+                            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Content" class="control-label"></label>
+                            <textarea id="tiny" name="Content"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+
+                    <div>
+                        <a asp-area="Admin" asp-controller="Post" asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="https://cdn.tiny.cloud/1/5yb8uiyv1yne6xu4mtmig7q57c68l2ra1odedtetdic56plu/tinymce/5-stable/tinymce.min.js"></script>
+    <script>
+        function example_image_upload_handler(blobInfo, success, failure, progress) {
+            var xhr, formData;
+
+            xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', '/api/save-image');
+
+            xhr.upload.onprogress = function(e) {
+                progress(e.loaded / e.total * 100);
+            };
+
+            xhr.onload = function() {
+                var json;
+
+                if (xhr.status === 403) {
+                    failure('HTTP Error: ' + xhr.status, { remove: true });
+                    return;
+                }
+
+                if (xhr.status < 200 || xhr.status >= 300) {
+                    failure('HTTP Error: ' + xhr.status);
+                    return;
+                }
+
+                json = JSON.parse(xhr.responseText);
+
+                if (!json || typeof json.location != 'string') {
+                    failure('Invalid JSON: ' + xhr.responseText);
+                    return;
+                }
+                //success('http://moxiecode.cachefly.net/tinymce/v9/images/logo.png');
+                success(json.location);
+            };
+
+            xhr.onerror = function() {
+                failure('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+            };
+
+            formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+            xhr.send(formData);
+        };
+
+
+        tinymce.init({
+            selector: 'textarea#tiny',
+            height: 500,
+            menubar: false,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor',
+                'searchreplace', 'visualblocks', 'image', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'wordcount', 'codesample', 'emoticons', 'hr'
+            ],
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
+                'bullist numlist outdent indent | removeformat | table | link image emoticons hr| codesample',
+            codesample_languages: [
+                { text: 'C#', value: 'csharp' },
+                { text: 'SQL', value: 'sql' },
+                { text: 'HTML/XML', value: 'markup' },
+                { text: 'JavaScript', value: 'javascript' },
+                { text: 'CSS', value: 'css' },
+                { text: 'PHP', value: 'php' },
+                { text: 'Ruby', value: 'ruby' },
+                { text: 'Python', value: 'python' },
+                { text: 'Java', value: 'java' },
+                { text: 'C', value: 'c' },
+                { text: 'C++', value: 'cpp' }
+            ],
+            emoticons_append: {
+                custom_mind_explode: {
+                    keywords: ['brain', 'mind', 'explode', 'blown'],
+                    char: '🤯'
+                }
+            },
+            /* without images_upload_url set, Upload tab won't show up*/
+            images_upload_url: 'postAcceptor.php',
+            /* we override default upload handler to simulate successful upload*/
+            images_upload_handler: example_image_upload_handler,
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

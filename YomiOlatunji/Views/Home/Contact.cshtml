@@ -1,0 +1,106 @@
+﻿@model YomiOlatunji.Core.ViewModel.AddContactMessage
+
+<div class="main contact-page">
+    <div class="section section-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto text-center">
+                    <h2 class="title">Connect with me</h2>
+                    <p>I will like to hear from you and also collaborate with you on projects. You can send me a message below or send a DM on any of the below social media platform.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto text-center">
+                    <h3 class="title"><small>Find me on social networks</small></h3>
+                    <a href="https://twitter.com/yomiolatunji_" class="btn btn-just-icon btn-twitter" target="_blank">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="https://medium.com/@@yomiolatunji" class="btn btn-just-icon btn-medium" target="_blank">
+                        <i class="fa fa-medium"></i>
+                    </a>
+                    <a href="https://www.instagram.com/yomiolatunji/" class="btn btn-just-icon btn-instagram" target="_blank">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                    <a href="https://github.com/yomiolatunji" class="btn btn-just-icon btn-github" target="_blank">
+                        <i class="fa fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/yomiolatunji/" class="btn btn-just-icon btn-linkedin" target="_blank">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto text-center">
+                    <h3 class="title"><small>Or drop a message for me</small></h3>
+                    <form class="contact" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" placeholder="Name" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="EmailAddress" class="control-label"></label>
+                                    <input asp-for="EmailAddress" class="form-control" placeholder="Email" />
+                                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="Title" class="control-label"></label>
+                                    <input asp-for="Title" class="form-control" placeholder="Subject" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <textarea asp-for="Message" class="form-control" placeholder="Message" rows="7"></textarea>
+                        <div class="row">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <button class="btn btn-primary btn-block btn-round"><i class="fa fa-paper-plane"></i> Send </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal fade show" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-notice">
+                    <div class="modal-content">
+                        <div class="modal-header no-border-header">
+                            <h5 class="modal-title" id="myModalLabel">Message Sent</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="instruction">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p> Thank you for contacting me. I will try to respond to every message within 24hrs.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="instruction">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p> <strong>Gracias!!</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>If you have more questions, don't hesitate to contact me or send us a tweet @@yomiolatunji_</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">Okay</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

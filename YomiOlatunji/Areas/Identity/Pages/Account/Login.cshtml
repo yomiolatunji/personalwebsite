@@ -1,0 +1,45 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
+            <div class="card card-register">
+                <h3 class="card-title">Welcome Admin</h3>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <form class="register-form" method="post">
+                    @*<div class="form-floating">*@
+                    <label asp-for="Input.Email" class="form-label"></label>
+                    <input asp-for="Input.Email" class="form-control  no-border" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    @*</div>*@
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <input asp-for="Input.Password" class="form-control  no-border" autocomplete="current-password" aria-required="true" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <button id="login-submit" type="submit" class="btn btn-primary btn-block btn-round">Log in</button>
+                </form>
+                <div class="forgot">
+                    <a id="forgot-password" asp-page="./ForgotPassword" class="btn btn-link">Forgot your password?</a>
+                </div>
+
+                @*<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>*@
+            </div>
+        </div>
+    </div>
+    <div class="demo-footer text-center">
+        <h6>
+            &copy; <script>
+                       document.write(new Date().getFullYear())
+            </script>
+            @*, made with <i class="fa fa-heart heart"></i> by Creative Tim*@
+        </h6>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

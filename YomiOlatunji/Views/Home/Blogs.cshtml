@@ -1,0 +1,90 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="wrapper">
+    <div class="main">
+        <div class="section section-white">
+            <div class="container">
+                <div class="article">
+                    <div class="row">
+                        @*<div class="col-md-4">
+                        <h6>Categories</h6>
+                        <span>Technology(3)</span>
+                        <span>Finance(15)</span>
+                        <span>Lifestyle(2)</span>
+                        <h6>Tags</h6>
+                        <span>Database(1)</span>
+                        <span>C#</span>
+                        <span>.net core</span>
+                        <span>Oracle</span>
+
+                        <button class="btn btn-move-right btn-round">
+                        Oracle
+                        <i class="nc-icon nc-minimal-right"></i>
+                        </button>
+                        </div>*@
+                        <div class="col-md-8 mr-auto ml-auto">
+                            <h2>Yomi's Thought</h2>
+                            <hr />
+                            <br />
+                            @foreach (var item in Model)
+                            {
+                                <div class="mb-4">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-12 d-flex align-items-center justify-content-center justify-content-md-start">
+                                                <a asp-action="Blog" asp-route-slug="@item.Slug">
+                                                    <img class="img-fluid" src="@(item.HeaderImage ?? item.Category.HeaderImage)" style="max-height: 250px">
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-8 col-md-12">
+                                                <a asp-action="Blog" asp-route-slug="@item.Slug">
+                                                    <h4 class="card-title">@item.Title </h4>
+                                                </a>
+                                                <div class="card-category">
+                                                    <span class="badge badge-primary">@item.Category.Name</span>
+                                                </div>
+                                                <div class="card-description">
+                                                    <p>@item.Excerpt</p>
+                                                </div>
+                                                <a asp-action="Blog" asp-route-slug="@item.Slug" class="btn btn-link btn-info">See more</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr />
+                            }
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-left">
+                            @if (Model.HasPrevious)
+                            {
+                                <a class="btn btn-link btn-default btn-move-left btn-sm" asp-action="Blogs" asp-route-pageNumber="@(Model.CurrentPage-1)">
+                                    <i class="fa fa-angle-left"></i> Older Posts
+                                </a>
+                            }
+                        </div>
+                        <div class="pull-right">
+                            @if (Model.HasNext)
+                            {
+                                <a class="btn btn-link btn-default btn-move-right btn-sm" asp-action="Blogs" asp-route-pageNumber="@(Model.CurrentPage+1)">
+                                    Newer Posts <i class="fa fa-angle-right"></i>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

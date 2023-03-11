@@ -1,0 +1,70 @@
+﻿@model IEnumerable<YomiOlatunji.Core.DbModel.Post.Post>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main">
+    <div class="section">
+        <div class="container">
+            <h2>Posts </h2>
+
+            <p>
+                <a asp-area="Admin" asp-controller="Post" asp-action="Create" class="btn btn-primary">Add Post</a>
+            </p>
+
+            @*<partial name="_StatusMessage" for="StatusMessage" />*@
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Category)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Title)
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var statusText = item.IsPublished ? "Published" : item.IsArchived ? "Archived" : "Draft";
+                            var statusDate = item.IsPublished ? item.PublishDate : item.UpdateTime ?? item.CreateTime;
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Category.Name)
+                                </td>
+                                <td>
+                                    <a asp-area="Admin" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+                                </td>
+                                <td>
+                                    @statusText
+                                </td>
+                                <td>
+                                    @statusDate
+                                </td>
+                                <td>
+                                    @if (!item.IsPublished)
+                                    {
+                                        <a asp-area="Admin" asp-controller="Post" asp-action="Publish" asp-route-id="@item.Id">Publish | </a>
+                                    }
+                                    <a asp-area="Admin" asp-controller="Post" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-area="Admin" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-area="Admin" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
