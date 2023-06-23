@@ -93,6 +93,22 @@ app.UseEndpoints(endpoints =>
         pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
 
+    endpoints.MapControllerRoute("blog",
+                             "Blog/{slug}",
+                             defaults: new { controller = "Home", action = "Blog" });
+
+    endpoints.MapControllerRoute("blogs",
+                             "Blogs",
+                             defaults: new { controller = "Home", action = "Blogs" });
+
+    endpoints.MapControllerRoute("about",
+                             "About",
+                             defaults: new { controller = "Home", action = "About" });
+
+    endpoints.MapControllerRoute("contact",
+                             "Contact",
+                             defaults: new { controller = "Home", action = "Contact" });
+
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}"
