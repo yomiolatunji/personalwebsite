@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using System.Drawing.Printing;
-using YomiOlatunji.Core.DbModel.Post;
 using YomiOlatunji.Core.ViewModel;
-using YomiOlatunji.DataSource.Interface;
 using YomiOlatunji.DataSource.Services.Interfaces;
 using YomiOlatunji.Models;
 
